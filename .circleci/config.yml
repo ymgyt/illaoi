@@ -29,7 +29,7 @@ jobs:
             export AWS_SECRET_ACCESS_KEY=${CI_AWS_SECRET_ACCESS_KEY}
             docker build -t illaoi .
             docker tag illaoi:latest ${DOCKER_REPO}/illaoi:latest
-            login_cmd=$(aws ecr get-login --no-include-email --region ${AWS_REGION})
+            login_cmd=$(/home/circleci/.local/bin/aws ecr get-login --no-include-email --region ${AWS_REGION})
             eval ${login_cmd}
             docker push ${DOCKER_REPO}/illaoi:latest
 workflows:
