@@ -11,6 +11,8 @@ jobs:
             pip install awscli --upgrade
             aws --version
 
+      - checkout
+
       - run:
           name: push image
           command: |
@@ -21,3 +23,12 @@ jobs:
             login_cmd=$(aws ecr get-login --no-include-email --region ${AWS_REGION})
             eval ${login_cmd}
             docker push ${DOCKER_REPO}/illaoi:latest
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+      - push
+        filters:
+          branches:
+            only:
+              - master
